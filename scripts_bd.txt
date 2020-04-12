@@ -1,0 +1,75 @@
+Clients
+CREATE TABLE public.clients
+(
+    id integer NOT NULL DEFAULT nextval('clients_id_seq'::regclass),
+    nome character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    cpf character varying(11) COLLATE pg_catalog."default",
+    CONSTRAINT clients_pkey PRIMARY KEY (id)
+)
+
+Guests
+CREATE TABLE public.guests
+(
+    id integer NOT NULL DEFAULT nextval('guests_id_seq'::regclass),
+    name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    phone bigint NOT NULL,
+    companions integer NOT NULL,
+    status "char" NOT NULL,
+    CONSTRAINT guests_pkey PRIMARY KEY (id)
+)
+
+Indice
+CREATE TABLE public.indice
+(
+    id integer NOT NULL DEFAULT nextval('indice_id_seq'::regclass),
+    nome character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    peso numeric(5,2) NOT NULL,
+    altura numeric(4,2) NOT NULL,
+    imc numeric(4,2) NOT NULL,
+    CONSTRAINT indice_pkey PRIMARY KEY (id)
+)
+
+Movimentatios (era pra ser movimentations kkkk)
+CREATE TABLE public.movimentatios
+(
+    id integer NOT NULL DEFAULT nextval('movimentatios_id_seq'::regclass),
+    client integer NOT NULL,
+    passage integer NOT NULL,
+    value character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    destiny character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pk_id_mov PRIMARY KEY (id),
+    CONSTRAINT movimentatios_client_fkey FOREIGN KEY (client)
+        REFERENCES public.clients (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT movimentatios_passage_fkey FOREIGN KEY (passage)
+        REFERENCES public.passages (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+Passages
+CREATE TABLE public.passages
+(
+    id integer NOT NULL DEFAULT nextval('passages_id_seq'::regclass),
+    started character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    finished character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT passages_pkey PRIMARY KEY (id)
+)
+
+Status_types
+CREATE TABLE public.status_types
+(
+    id integer NOT NULL DEFAULT nextval('" status_types_id_seq"'::regclass),
+    type "char" NOT NULL,
+    CONSTRAINT " status_types_pkey" PRIMARY KEY (id)
+)
+
+Users
+CREATE TABLE public.users
+(
+    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+)
